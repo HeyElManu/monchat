@@ -1,41 +1,79 @@
-<script>
-const socket = io();
-const form = document.getElementById('form');
-const input = document.getElementById('input');
-const pseudoInput = document.getElementById('pseudo');
-const messages = document.getElementById('messages');
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mon Chat Messenger</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="chat-container">
+    <div id="messages"></div>
+    <form id="form">
+      <input id="pseudo" placeholder="Ton pseudo" required />
+      <input id="input" placeholder="Écris un message..." autocomplete="off" required />
+      <button>Envoyer</button>
+    </form>
+  </div>
 
-// Couleurs uniques pour chaque pseudo
-const colors = {};
-function getColor(pseudo) {
-  if (!colors[pseudo]) {
-    colors[pseudo] = '#' + Math.floor(Math.random()*16777215).toString(16);
-  }
-  return colors[pseudo];
-}
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const form = document.getElementById('form');
+    const input = document.getElementById('input');
+    const pseudoInput = document.getElementById('pseudo');
+    const messages = document.getElementById('messages');
 
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (input.value && pseudoInput.value) {
-    socket.emit('chat message', { pseudo: pseudoInput.value, message: input.value });
-    input.value = '';
-  }
-});
+    // Couleurs aléatoires par pseudo
+    const colors = {};
+    function getColor(pseudo) {
+      if (!colors[pseudo]) {
+        colors[pseudo] = '#' + Math.floor(Math.random()*16777215).toString(16);
+      }
+      return colors[pseudo];
+    }
 
-socket.on('chat message', ({ pseudo, message }) => {
-  const item = document.createElement('div');
-  item.classList.add('message');
+    let joined = false;
 
-  // Vérifie si c'est ton message
-  if (pseudo === pseudoInput.value) {
-    item.classList.add('mine');
-  } else {
-    item.classList.add('other');
-  }
+    // Vérifie le pseudo avant de rejoindre
+    pseudoInput.addEventListener('change', () => {
+      if (!joined) {
+        const pseudo = pseudoInput.value.trim();
+        if (pseudo) {
+          socket.emit('join', pseudo, (response) => {
+            if (response.success) {
+              joined = true;
+            } else {
+              alert(response.message);
+              pseudoInput.value = '';
+            }
+          });
+        }
+      }
+    });
 
-  item.innerHTML = `<span class="pseudo" style="color:${getColor(pseudo)}">${pseudo}</span>: ${message}`;
-  messages.appendChild(item);
-  messages.scrollTop = messages.scrollHeight;
-});
-</script>
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (input.value && joined) {
+        socket.emit('chat message', { pseudo: pseudoInput.value, message: input.value });
+        input.value = '';
+      }
+    });
 
+    socket.on('chat message', ({ pseudo, message }) => {
+      const item = document.createElement('div');
+      item.classList.add('message');
+
+      if (pseudo === pseudoInput.value) {
+        item.classList.add('mine');
+      } else {
+        item.classList.add('other');
+      }
+
+      item.innerHTML = `<span class="pseudo" style="color:${getColor(pseudo)}">${pseudo}</span>: ${message}`;
+      messages.appendChild(item);
+      messages.scrollTop = messages.scrollHeight;
+    });
+  </script>
+</body>
+</html>

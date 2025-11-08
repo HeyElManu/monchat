@@ -30,9 +30,25 @@ body {
   padding: 8px 12px;
   margin: 6px 0;
   border-radius: 20px;
-  background: #e4e6eb;
-  max-width: 80%;
+  max-width: 70%;
   word-wrap: break-word;
+  display: inline-block;
+}
+
+/* Bulles des messages envoyés par toi */
+.message.mine {
+  background: #1877f2;
+  color: white;
+  margin-left: auto;
+  text-align: right;
+}
+
+/* Bulles des messages des autres */
+.message.other {
+  background: #e4e6eb;
+  color: black;
+  margin-right: auto;
+  text-align: left;
 }
 
 .message .pseudo {
@@ -70,29 +86,3 @@ button {
 button:hover {
   background: #165ec9;
 }
-
-.message {
-  padding: 8px 12px;
-  margin: 6px 0;
-  border-radius: 20px;
-  max-width: 70%;
-  word-wrap: break-word;
-  display: inline-block;
-}
-
-/* Message envoyé par toi */
-.message.mine {
-  background: #1877f2;
-  color: white;
-  margin-left: auto;
-  text-align: right;
-}
-
-/* Message des autres */
-.message.other {
-  background: #e4e6eb;
-  color: black;
-  margin-right: auto;
-  text-align: left;
-}
-
