@@ -1,7 +1,7 @@
 {
   "name": "monchat",
   "version": "1.0.0",
-  "description": "Chat en ligne façon Messenger avec pseudos uniques et historique",
+  "description": "Chat Messenger avec pseudos uniques et historique",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

@@ -25,8 +25,6 @@ io.on('connection', (socket) => {
     } else {
       connectedUsers.add(pseudo);
       userPseudo = pseudo;
-
-      // Envoie l’historique des messages au nouvel utilisateur
       callback({ success: true, history: messageHistory });
       console.log(`Pseudo connecté: ${pseudo}`);
     }
@@ -34,6 +32,9 @@ io.on('connection', (socket) => {
 
   // Réception des messages
   socket.on('chat message', ({ pseudo, message }) => {
+    // Sécurité : ignore les messages si pseudo non validé
+    if (!userPseudo || pseudo !== userPseudo) return;
+
     const msg = { pseudo, message };
     messageHistory.push(msg);       // Ajoute au tableau d’historique
     io.emit('chat message', msg);   // Envoie à tous

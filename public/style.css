@@ -35,7 +35,6 @@ body {
   display: inline-block;
 }
 
-/* Bulles des messages envoyés par toi */
 .message.mine {
   background: #1877f2;
   color: white;
@@ -43,7 +42,6 @@ body {
   text-align: right;
 }
 
-/* Bulles des messages des autres */
 .message.other {
   background: #e4e6eb;
   color: black;
