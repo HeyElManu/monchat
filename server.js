@@ -3,13 +3,17 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
+const PORT = process.env.PORT || 3000;
+
 app.use(express.static('public'));
 
 io.on('connection', (socket) => {
   console.log('Un utilisateur est connecté');
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+
+  // Quand un utilisateur envoie un message
+  socket.on('chat message', ({ pseudo, message }) => {
+    io.emit('chat message', { pseudo, message });
   });
 });
 
-http.listen(3000, () => console.log('Serveur en ligne sur http://localhost:3000'));
+http.listen(PORT, () => console.log(`Serveur en ligne sur le port ${PORT}`));

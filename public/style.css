@@ -1,0 +1,98 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+#chat-container {
+  width: 400px;
+  max-width: 90%;
+  height: 600px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.message {
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 20px;
+  background: #e4e6eb;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message .pseudo {
+  font-weight: bold;
+}
+
+#form {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+#pseudo, #input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+#pseudo {
+  max-width: 100px;
+  border-right: 1px solid #ccc;
+}
+
+button {
+  background: #1877f2;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #165ec9;
+}
+
+.message {
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 20px;
+  max-width: 70%;
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+/* Message envoyé par toi */
+.message.mine {
+  background: #1877f2;
+  color: white;
+  margin-left: auto;
+  text-align: right;
+}
+
+/* Message des autres */
+.message.other {
+  background: #e4e6eb;
+  color: black;
+  margin-right: auto;
+  text-align: left;
+}
+
