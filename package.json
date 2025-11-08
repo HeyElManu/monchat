@@ -1,18 +1,18 @@
 {
-  "dependencies": {
-    "express": "^5.1.0",
-    "socket.io": "^4.8.1"
-  },
-  "name": "jemefaischier",
+  "name": "monchat",
   "version": "1.0.0",
-  "description": "",
+  "description": "Mon chat en ligne pour discuter avec mes amis",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.19.0",
+    "socket.io": "^4.8.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "HeyElManu",
+  "license": "MIT"
 }
