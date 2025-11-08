@@ -8,6 +8,9 @@ const PORT = process.env.PORT || 3000;
 // Liste des pseudos utilisés
 const connectedUsers = new Set();
 
+// Historique des messages
+const messageHistory = [];
+
 app.use(express.static('public'));
 
 io.on('connection', (socket) => {
@@ -22,14 +25,18 @@ io.on('connection', (socket) => {
     } else {
       connectedUsers.add(pseudo);
       userPseudo = pseudo;
-      callback({ success: true });
+
+      // Envoie l’historique des messages au nouvel utilisateur
+      callback({ success: true, history: messageHistory });
       console.log(`Pseudo connecté: ${pseudo}`);
     }
   });
 
   // Réception des messages
   socket.on('chat message', ({ pseudo, message }) => {
-    io.emit('chat message', { pseudo, message });
+    const msg = { pseudo, message };
+    messageHistory.push(msg);       // Ajoute au tableau d’historique
+    io.emit('chat message', msg);   // Envoie à tous
   });
 
   // Libère le pseudo à la déconnexion
