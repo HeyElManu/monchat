@@ -1,6 +1,7 @@
 import { Temporal } from '@js-temporal/polyfill';
 
-globalThis.Temporal = Temporal;
+(globalThis as typeof globalThis & { Temporal: typeof Temporal }).Temporal =
+  Temporal;
 
 import 'dotenv/config';
 
